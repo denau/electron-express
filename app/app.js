@@ -11,6 +11,9 @@ module.exports = () => {
   express = require('express');
   app 	= express();
 
+  // Load Node Process API for calling on the command line.
+  exec = require('child_process').exec;
+
   // Load Body Parser Module
   bodyParser = require('body-parser');
   app.use(bodyParser.json());
@@ -59,8 +62,6 @@ module.exports = () => {
   	next();
   });
 
-  // Load The Bcrypt Module
-  bcrypt = require('bcryptjs');
 
   // Setup Globally Included Directories
   app.use(express.static(path.join(__dirname, '/../bower_components/')));
@@ -71,9 +72,9 @@ module.exports = () => {
   // Load Available Modules For Dependancy Injection Into Models & Routes
   modules = {
   	app: app,
-  	bcrypt: bcrypt,
   	bodyParser: bodyParser,
   	config: config,
+    exec: exec,
   	express: express,
   	expressHandlebars: expressHandlebars,
   	flash: flash,
